@@ -19,24 +19,21 @@ module.exports = function (grunt) {
 
     // Sass all the style things
     sass: {
+      options: {
+        sourceMap: true,
+        outputStyle: 'expanded'
+        // includePaths: ['./node_modules']
+      },
       default: {
         files: {
           'dist/css/<%= pkg.name %>.css': 'src/stylesheets/<%= pkg.name %>.scss',
           'dist/css/<%= pkg.name %>-docs.css': 'src/stylesheets/<%= pkg.name %>-docs.scss'
-        },
-        options: {
-          sourceMap: true,
-          outputStyle: 'expanded'
         },
       },
       minify: {
         files: {
           'dist/css/<%= pkg.name %>.min.css': 'src/stylesheets/<%= pkg.name %>.scss',
           'dist/css/<%= pkg.name %>-docs.min.css': 'src/stylesheets/<%= pkg.name %>-docs.scss'
-        },
-        options: {
-          sourceMap: true,
-          outputStyle: 'compressed'
         },
       },
     },
@@ -46,12 +43,12 @@ module.exports = function (grunt) {
 
       // Stylesheets, fonts, img, and js **FROM** /node_modules/uswds/
 
-      uswds_stylesheets: {
-        expand: true,
-        src: '**',
-        cwd: 'node_modules/uswds/src/stylesheets',
-        dest: 'src/stylesheets/lib/uswds'
-      },
+      // uswds_stylesheets: {
+      //   expand: true,
+      //   src: '**',
+      //   cwd: 'node_modules/uswds/src/stylesheets',
+      //   dest: 'src/stylesheets/lib/uswds'
+      // },
 
       uswds_fonts: {
         expand: true,
@@ -296,7 +293,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['build', 'browserSync', 'watch']);
   grunt.registerTask('build', [
     'clean:dist',
-    'copy:uswds_stylesheets',
+    // 'copy:uswds_stylesheets',
     'copy:uswds_fonts',
     'copy:uswds_img',
     'copy:uswds_js',

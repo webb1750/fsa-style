@@ -5,9 +5,8 @@ plugin_directories: ['.scss-linters']
 exclude: [
 
   # Plug-ins, Bourbon, USWDS, etc
-  'src/stylesheets/lib/*.scss',
-  'src/stylesheets/lib/**',
-  'src/stylesheets/lib/**/*.scss',
+  'node_modules/uswds/**',
+  'node_modules/uswds/**/*.scss',
 
 ]
 
