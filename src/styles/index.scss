@@ -1,0 +1,9 @@
+$fakeColor: shade('#FF00FF', 25%);
+
+body {
+  background-color: "#999999";
+}
+
+.fake {
+  color: $fakeColor;
+}
