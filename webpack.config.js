@@ -86,28 +86,16 @@ var baseConfig = {
           fallback: 'style-loader'
         })
       },
-      {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: './img/',
-              name: '[name].[ext]',
-              limit: 50000
-            }
-          }
-        ]
-      },
+      
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              outputPath: './img/',
+              outputPath: '/img/',
               name: '[name].[ext]',
-              limit: 50000
+              limit: 100000
             }
           }
         ]
@@ -120,7 +108,7 @@ var baseConfig = {
             options: {
               outputPath: './fonts/',
               name: '[name].[ext]',
-              limit: 50000
+              limit: 100000
             }
           }
         ]
