@@ -43,10 +43,10 @@ var baseConfig = {
         ]
       },
       {
-        test: /jquery/,
+        test: require.resolve("jquery"),
         use: [
           {
-            loader: require("imports-loader?$=jquery")
+            loader: "imports-loader?$=jquery"
           }
         ]
       },
@@ -135,6 +135,10 @@ var baseConfig = {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV)
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
     })
   ]
 };
