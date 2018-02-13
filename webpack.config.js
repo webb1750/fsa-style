@@ -1,10 +1,15 @@
 var webpack = require('webpack');
 var path = require('path');
+var $ = require("jquery");
 var WebpackDevServer = require('webpack-dev-server');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
+// Create multiple instances ???
+//const extractCSS = new ExtractTextPlugin('stylesheets/[name]-one.css');
+//const extractSCSS = new ExtractTextPlugin('stylesheets/[name]-two.css');
+
 
 var baseConfig = {
   entry:  {
@@ -17,25 +22,47 @@ var baseConfig = {
   },
 
   devtool: "source-map",
-  
+
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.html$/,
         use: [
-          { loader: 'babel-loader' }
+          {
+            loader: 'html-loader'
+          }
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          { 
+            loader: 'babel-loader'
+          }
+        ]
+      },
+      {
+        test: /jquery/,
+        use: [
+          {
+            loader: require("imports-loader?$=jquery")
+          }
         ]
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: ExtractTextPlugin.extract(
           {
-            use: [  
+            use: [
               {
                 loader: 'css-loader',
                 options: {
-                  sourceMap: true
+                  minimize: true
                 }
+              },{
+                loader: 'style-loader'
               }
             ],
             fallback: 'style-loader'
@@ -44,36 +71,68 @@ var baseConfig = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract(
-          {
-            use: [
-              { loader: 'css-loader' },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true,
-                  url: false
-                }
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
               }
-            ],
-            fallback: 'style-loader'
-          }
-        )
+            },
+            {
+              loader: 'sass-loader'
+            }            
+          ],
+          fallback: 'style-loader'
+        })
       },
       {
         test: /\.svg$/,
         use: [
           {
-             loader: 'url-loader',
-             query: { limit : 10000 }
+            loader: 'file-loader',
+            options: {
+              outputPath: './img/',
+              name: '[name].[ext]',
+              limit: 50000
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: './img/',
+              name: '[name].[ext]',
+              limit: 50000
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: './fonts/',
+              name: '[name].[ext]',
+              limit: 50000
+            }
           }
         ]
       }
     ]
   },
+
   plugins: [
     new ExtractTextPlugin('css/[name].css'),
-    new HTMLWebpackPlugin(),
+    new HTMLWebpackPlugin({
+      template: 'src/index.html'
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV)
     })
