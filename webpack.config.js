@@ -19,15 +19,14 @@ var baseConfig = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     publicPath: '/',
-    port: 8080
+    port: 8080,
+    hot: true
   },
 
   output: {
     filename: '[name].bundle.js',
     path: path.resolve('./dist')
   },
-
-  devtool: "source-map",
 
   module: {
     rules: [
