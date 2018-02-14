@@ -23,6 +23,8 @@ var baseConfig = {
     hot: true
   },
 
+  devtool: 'source-map',
+
   output: {
     filename: '[name].bundle.js',
     path: path.resolve('./dist')
@@ -111,7 +113,7 @@ var baseConfig = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: './fonts/',
+              outputPath: '/fonts/',
               name: '[name].[ext]',
               limit: 100000
             }
