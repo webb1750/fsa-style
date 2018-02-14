@@ -16,6 +16,12 @@ var baseConfig = {
     'fsa-style': './src/index.js'
   },
 
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    publicPath: '/',
+    port: 8080
+  },
+
   output: {
     filename: '[name].bundle.js',
     path: path.resolve('./dist')
@@ -117,7 +123,9 @@ var baseConfig = {
   },
 
   plugins: [
-    new ExtractTextPlugin('css/[name].css'),
+    new ExtractTextPlugin({
+      filename: 'css/[name].css'
+    }),
     new HTMLWebpackPlugin({
       template: 'src/index.html'
     }),
