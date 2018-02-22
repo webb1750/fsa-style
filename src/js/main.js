@@ -11,6 +11,7 @@
 
 'use strict';
 
+console.log('main loading');
 var $ = window.jQuery = require('jquery');
 var DocsNav = require('./components/docs-nav');
 var FSA_NAV_GLOBAL = require('./components/fsa-nav-global');

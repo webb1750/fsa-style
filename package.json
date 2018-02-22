@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "webpack --watch",
     "server": "node ./server/index.js",
-    "start": "SET NODE_ENV=development & webpack-dev-server",
+    "start": "SET NODE_ENV=development & webpack-dev-server --hot --inline",
     "build": "SET NODE_ENV=production & webpack"
   },
   "author": "Casey Hill <bignamehere@gmail.com>",
@@ -15,6 +15,8 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "clean-webpack-plugin": "^0.1.18",
+    "copy-webpack-plugin": "^4.4.1",
     "css-loader": "^0.28.9",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",

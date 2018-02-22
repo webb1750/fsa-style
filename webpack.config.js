@@ -1,9 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
 var $ = require("jquery");
+//var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackDevServer = require('webpack-dev-server');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
+//var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
 // Create multiple instances ???
@@ -124,6 +126,7 @@ var baseConfig = {
   },
 
   plugins: [
+    //new CleanWebpackPlugin(['./dist/']),
     new ExtractTextPlugin({
       filename: 'css/[name].css'
     }),
@@ -137,6 +140,14 @@ var baseConfig = {
       $: 'jquery',
       jQuery: 'jquery'
     })
+    /*,
+    new CopyWebpackPlugin([
+      {
+        from: 'src/js/**',
+        to: '/'
+      }
+    ])
+    */
   ]
 };
 
