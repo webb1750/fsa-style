@@ -5,6 +5,7 @@ var $ = require("jquery");
 var WebpackDevServer = require('webpack-dev-server');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
+var StyleLintPlugin = require('stylelint-webpack-plugin');
 //var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
@@ -139,6 +140,9 @@ var baseConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+    new StyleLintPlugin({
+      context: './src/stylesheets/fsa-style.scss'
     })
     /*,
     new CopyWebpackPlugin([
