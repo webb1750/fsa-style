@@ -1,140 +1,44 @@
-var webpack = require('webpack');
-var path = require('path');
-var $ = require("jquery");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var WebpackDevServer = require('webpack-dev-server');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HTMLWebpackPlugin = require('html-webpack-plugin');
-var StyleLintPlugin = require('stylelint-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+//
+//
+//
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const common = require('./webpack.common.js');
 
-var ENV = process.env.NODE_ENV;
-
-// Create multiple instances ???
-//const extractCSS = new ExtractTextPlugin('css/[name].css');
-//const extractJS = new ExtractTextPlugin('js/[name].js');
-
-
-var baseConfig = {
-  entry:  {
-    'fsa-style': './src/index.js'
-  },
-
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    watchContentBase: true,
-    publicPath: '/',
-    port: 8888,
-    hot: true,
-    open: true
-  },
-
-  devtool: 'source-map',
+module.exports = merge(common, {
 
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve('./dist')
+    path: path.resolve('./dist'),
+    filename: '[name].bundle.js'    
   },
 
   module: {
     rules: [
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader'
-          }
-        ]
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-          { 
-            loader: 'babel-loader'
-          }
-        ]
-      },
-      {
-        test: require.resolve("jquery"),
-        use: [
-          {
-            loader: "imports-loader?$=jquery"
-          }
-        ]
-      },
-      {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ENV === 'production' ? ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  minimize: true
-                }
-              },
-              {
-                loader: 'postcss-loader'
-              }
-            ]
-          })            
-          : ['style-loader','css-loader']
-      },
-      {
-        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
               options: {
-                importLoaders: 1,
                 minimize: true
               }
             },
             {
-              loader: 'sass-loader'
-            }            
-          ],
-          fallback: 'style-loader'
+              loader: 'postcss-loader'
+            }
+          ]
         })
-      },
-      
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: '/img/',
-              name: '[name].[ext]',
-              limit: 100000
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: '/fonts/',
-              name: '[name].[ext]',
-              limit: 100000
-            }
-          }
-        ]
       }
     ]
   },
 
-  plugins:[
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(ENV)
-    }),
-    new ExtractTextPlugin({ filename: 'css/[name].css' }),
+  plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
@@ -169,24 +73,6 @@ var baseConfig = {
       },
       sourceMap: true
     }),
-    new StyleLintPlugin({
-      context: './src/stylesheets/fsa-style.scss'
-    }),
-    new HTMLWebpackPlugin({
-      template: 'src/index.html',
-      filename: 'index.html',
-      options:{
-        title: 'FSA Style'
-      }
-    }),
     new CleanWebpackPlugin(['./dist/']),
-    new CopyWebpackPlugin([
-      {
-        from: './src/js',
-        to: './js/'
-      }
-    ]),   
   ]
-};
-
-module.exports = baseConfig;
+});

@@ -3,10 +3,10 @@
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "SET NODE_ENV=development & webpack-dev-server --hot --inline --config webpack.dev.js",        
+    "build": "SET NODE_ENV=production & webpack --config webpack.prod.js",
     "watch": "webpack --watch",
-    "server": "node ./server/index.js",
-    "start": "SET NODE_ENV=development & webpack-dev-server --hot --inline",
-    "build": "SET NODE_ENV=production & webpack"
+    "server": "node ./server/index.js"
   },
   "author": "Casey Hill <bignamehere@gmail.com>",
   "license": "ISC",
