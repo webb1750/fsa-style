@@ -1,17 +1,18 @@
 var webpack = require('webpack');
 var path = require('path');
 var $ = require("jquery");
-//var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackDevServer = require('webpack-dev-server');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
 var StyleLintPlugin = require('stylelint-webpack-plugin');
-//var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var ENV = process.env.NODE_ENV;
+
 // Create multiple instances ???
-//const extractCSS = new ExtractTextPlugin('stylesheets/[name]-one.css');
-//const extractSCSS = new ExtractTextPlugin('stylesheets/[name]-two.css');
+//const extractCSS = new ExtractTextPlugin('css/[name].css');
+//const extractJS = new ExtractTextPlugin('js/[name].js');
 
 
 var baseConfig = {
@@ -21,9 +22,11 @@ var baseConfig = {
 
   devServer: {
     contentBase: path.join(__dirname, "dist"),
+    watchContentBase: true,
     publicPath: '/',
-    port: 8080,
-    hot: true
+    port: 8888,
+    hot: true,
+    open: true
   },
 
   devtool: 'source-map',
@@ -63,21 +66,21 @@ var baseConfig = {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract(
-          {
-            use: [
+        use: ENV === 'production' ? ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
               {
                 loader: 'css-loader',
                 options: {
                   minimize: true
                 }
-              },{
-                loader: 'style-loader'
+              },
+              {
+                loader: 'postcss-loader'
               }
-            ],
-            fallback: 'style-loader'
-          }
-        )
+            ]
+          })            
+          : ['style-loader','css-loader']
       },
       {
         test: /\.scss$/,
@@ -86,7 +89,8 @@ var baseConfig = {
             {
               loader: 'css-loader',
               options: {
-                importLoaders: 1
+                importLoaders: 1,
+                minimize: true
               }
             },
             {
@@ -126,41 +130,63 @@ var baseConfig = {
     ]
   },
 
-  plugins: [
-    //new CleanWebpackPlugin(['./dist/']),
-    new ExtractTextPlugin({
-      filename: 'css/[name].css'
-    }),
-    new HTMLWebpackPlugin({
-      template: 'src/index.html'
-    }),
+  plugins:[
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV)
     }),
+    new ExtractTextPlugin({ filename: 'css/[name].css' }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      include: /\.min\.js$/,
+      uglifyOptions: {
+        ecma: 8,
+        warnings: false,
+        compress: {
+          warnings: false,
+          screw_ie8: true,
+          conditionals: true,
+          unused: true,
+          comparisons: true,
+          sequences: true,
+          dead_code: true,
+          evaluate: true,
+          if_return: true,
+          join_vars: true
+        },
+        output: {
+          comments: false,
+          beautify: false
+        },
+        toplevel: false,
+        nameCache: null,
+        ie8: false,
+        keep_classnames: undefined,
+        keep_fnames: false,
+        safari10: false,
+      },
+      sourceMap: true
+    }),
     new StyleLintPlugin({
       context: './src/stylesheets/fsa-style.scss'
-    })
-    /*,
+    }),
     new CopyWebpackPlugin([
       {
-        from: 'src/js/**',
-        to: '/'
+        from: './src/js',
+        to: './js/'
       }
-    ])
-    */
+    ]),
+    new HTMLWebpackPlugin({
+      template: 'src/index.html',
+      filename: 'index.html',
+      options:{
+        title: 'FSA Style'
+      }
+    }),
+    ENV === 'production' ? new CleanWebpackPlugin(['./dist/']) : new CleanWebpackPlugin(['./build/'])   
   ]
 };
-
-if (process.env.NODE_ENV === 'development') {
-  console.warn('This warning will dissapear on production build!');
-}
-
-if (ENV === 'production') {
-  baseConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
-}
 
 module.exports = baseConfig;
