@@ -10,8 +10,6 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   
-  devtool: 'source-map',
-  
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     watchContentBase: true,
@@ -35,12 +33,6 @@ module.exports = merge(common, {
   plugins: [
     new StyleLintPlugin({
       context: '../src/stylesheets/fsa-style.scss'
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: './src/js',
-        to: './js/'
-      }
-    ]),
+    })
   ]
 });

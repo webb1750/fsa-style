@@ -8,6 +8,8 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   
+  devtool: 'source-map',
+
   entry:  {
     'fsa-style': './src/index.js'
   },
@@ -46,9 +48,10 @@ module.exports = {
             {
               loader: 'css-loader',
               options: {
+                sourceMap: true,
                 importLoaders: 1,
-                minimize: true
-              }
+                minimize: false
+              },
             },
             {
               loader: 'sass-loader'
@@ -94,6 +97,13 @@ module.exports = {
       filename: 'index.html',
       options:{
         title: 'FSA Style'
+      }
+    }),
+    new HTMLWebpackPlugin({
+      template: 'src/boilerplate.html',
+      filename: 'boilerplate.html',
+      options:{
+        title: 'FSA Style - Boilerplate'
       }
     }),
     new CopyWebpackPlugin([
