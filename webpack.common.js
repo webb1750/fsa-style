@@ -100,6 +100,10 @@ module.exports = {
       {
         from: './src/js',
         to: './js/'
+      },
+      {
+        from: './src/img',
+        to: './img/'
       }
     ]),
   ]
