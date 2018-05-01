@@ -10,6 +10,8 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
 
+  mode: 'production',
+
   output: {
     path: path.resolve('./dist'),
     filename: '[name].bundle.js'    
