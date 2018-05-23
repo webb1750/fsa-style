@@ -1,7 +1,8 @@
 //
 //
 //
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -43,24 +44,13 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                importLoaders: 1,
-                minimize: false
-              },
-            },
-            {
-              loader: 'sass-loader'
-            }            
-          ],
-          fallback: 'style-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'           
+        ]
       },
-      
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
@@ -91,7 +81,12 @@ module.exports = {
   },
 
   plugins:[
-    new ExtractTextPlugin({ filename: 'css/[name].css' }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "css/[name].css",
+      chunkFilename: "[name].css"
+    }),
     new HTMLWebpackPlugin({
       template: 'src/index.html',
       filename: 'index.html',
