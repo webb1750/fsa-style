@@ -2,7 +2,9 @@
 //
 //
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var StyleLintPlugin = require('stylelint-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
@@ -17,7 +19,6 @@ module.exports = merge(common, {
     watchContentBase: true,
     publicPath: '/',
     port: 8888,
-    hot: true,
     inline: true,
     open: true
   },
@@ -27,7 +28,12 @@ module.exports = merge(common, {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ['style-loader','css-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'           
+        ]
       },
     ]
   },
