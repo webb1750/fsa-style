@@ -24,7 +24,10 @@ module.exports = merge(common, {
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {minimize: true}
+          },
           'postcss-loader',
           'sass-loader'           
         ]
