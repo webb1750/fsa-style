@@ -3,6 +3,7 @@
 //
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -31,10 +32,22 @@ module.exports = merge(common, {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins() {
+                return [autoprefixer(
+                  {
+                    grid: true
+                  }
+                )];
+              }
+            }
+          },
           'sass-loader'           
         ]
-      },
+      }      
     ]
   },
 

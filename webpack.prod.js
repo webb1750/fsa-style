@@ -2,6 +2,7 @@
 //
 //
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const merge = require('webpack-merge');
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -28,7 +29,19 @@ module.exports = merge(common, {
             loader: 'css-loader',
             options: {minimize: true}
           },
-          'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [autoprefixer(
+                  {
+                    grid: true
+                  }
+                )];
+              },
+              sourceMap: true
+            }
+          },
           'sass-loader'           
         ]
       }
