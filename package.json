@@ -41,6 +41,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "html-beautify-webpack-plugin": "^1.0.5"
+    "html-beautify-webpack-plugin": "^1.0.5",
+    "pixrem": "^4.0.1"
   }
 }

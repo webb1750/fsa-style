@@ -4,6 +4,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const pixrem = require('pixrem');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -35,14 +36,11 @@ module.exports = merge(common, {
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
-              plugins() {
-                return [autoprefixer(
-                  {
-                    grid: true
-                  }
-                )];
-              }
+              plugins: () =>  [
+                pixrem ({unitPrecision: 3}),
+                autoprefixer ({grid: true})
+              ],
+              sourceMap: true
             }
           },
           'sass-loader'           

@@ -3,6 +3,7 @@
 //
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const pixrem = require('pixrem');
 const merge = require('webpack-merge');
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -12,6 +13,10 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
 
   mode: 'production',
+
+  optimization: {
+    minimize: true
+  },
 
   output: {
     path: path.resolve('./dist'),
@@ -32,13 +37,10 @@ module.exports = merge(common, {
           {
             loader: 'postcss-loader',
             options: {
-              plugins() {
-                return [autoprefixer(
-                  {
-                    grid: true
-                  }
-                )];
-              },
+              plugins: () =>  [
+                pixrem ({unitPrecision: 3}),
+                autoprefixer ({grid: true})
+              ],
               sourceMap: true
             }
           },
