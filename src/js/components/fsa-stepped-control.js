@@ -2,68 +2,63 @@
 // None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
 // None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
 // None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
-// None of this is production-quality. Do not use for production. Use as inspiration and guidance for yours.
 
-var $ = window.jQuery = require('jquery');
 
-;$(function() {
+// Utility method to loop thru NodeList correctly
+var forEach = function (array, callback, scope) {
+  for (var i = 0; i < array.length; i++) {
+    callback.call(scope, i, array[i]); // passes back stuff we need
+  }
+};
 
-    var $steppedControl = $('.fsa-stepped-control--sticky'); // only the --sticky ones
+var stickySteps = document.querySelectorAll('.fsa-stepped-control--sticky');
 
-    function steppedControl() {
+function setComponentStyle() {
 
-      $steppedControl.each(function(index) {
+  // iterate thru each stepped control on page
+  forEach(stickySteps, function(index, value) {
+    var _el = value;
+  
+    var viewportOffset = _el.getBoundingClientRect();   
+    var scHeight = _el.offsetHeight;
+    var scBottomPosition = window.innerHeight - (viewportOffset.top + scHeight);
+    
+    if (scBottomPosition > 12) {
+      
+      if(!_el.classList.contains('fsa-stepped-control--unstuck')){
+        _el.classList.add('fsa-stepped-control--unstuck');
+      }
+    } else {
 
-        var $self = $(this)
-        var pageTop = $(window).scrollTop();
-        var windowHeight = $(window).height();
-        var steppendControlPosTop = $self.offset().top - pageTop;
-        var steppendControlHeight = $self.outerHeight();
-        var steppendControlPosBot = windowHeight - (steppendControlPosTop + steppendControlHeight);
-
-        // console.log('pageTop: ' + pageTop);
-        // console.log('windowHeight: ' + windowHeight);
-        // console.log('steppendControlPosTop: ' + steppendControlPosTop);
-        // console.log('steppendControlHeight: ' + steppendControlHeight);
-        // console.log('steppendControlPosBot: ' + steppendControlPosBot);
-
-        if (steppendControlPosBot > 12) {
-          $self.addClass("fsa-stepped-control--unstuck");
-        }
-        else {
-          $self.removeClass("fsa-stepped-control--unstuck");
-        }
-
-      });
-
+      if(_el.classList.contains('fsa-stepped-control--unstuck')){
+        _el.classList.remove('fsa-stepped-control--unstuck');
+      }
     }
+  });
+}
 
-    if ($steppedControl.length) { // only run if at least one instance
 
-      $(window).scroll(function() {
-        steppedControl()
-      });
+// check if SC component exists on page
+if(stickySteps.length){
 
-      $('.fsa-modal').scroll(function() {
-        steppedControl()
-      });
+  window.addEventListener('scroll', function() {
+    setComponentStyle();
+  });
 
-      $(document).ready(function() {
-        steppedControl();
-      })
+  var modal = document.querySelector('.fsa-modal');
+  modal.addEventListener("scroll", function(){
+    setComponentStyle();
+  });
 
-      $(window).resize(function() {
-        // may want to **debounce** this, e.g. http://benalman.com/projects/jquery-throttle-debounce-plugin/
-        steppedControl();
-      })
+  document.addEventListener("DOMContentLoaded", function(){
+    setComponentStyle();
+  });
 
-    }
+  window.addEventListener('resize', function() {
+    setComponentStyle();
+  });
 
-});
+}
+
 
 console.log('SteppedControl loaded, its JS is NOT to be used for Production, demo purposes only');
