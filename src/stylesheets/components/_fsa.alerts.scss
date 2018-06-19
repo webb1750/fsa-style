@@ -2,8 +2,11 @@
 
 .fsa-alert {
 
-  @extend .usa-alert;
-  border-left: $size-base solid $color-fsa-tertiary-900;
+  & {
+    @extend .usa-alert;
+    margin-bottom: 1.5em;
+    border-left: $size-base solid $color-fsa-tertiary-900;
+  }
 
   // Variations ---------------------------------------------------------------
 
@@ -32,6 +35,7 @@
 
   &--no-icon {
     @extend .usa-alert-no_icon;
+    padding: 0 $size-small;
   }
 
   // Elements
@@ -41,20 +45,37 @@
   }
 
   &__body {
+
     @extend .usa-alert-body;
+
+    .fsa-alert--no-icon & {
+      padding: 0 $size-base;
+    }
+
   }
 
   &__heading {
+
     @extend .usa-alert-heading;
     @include font-size(4);
     font-family: $font-sans;
     color: $color-base;
     font-weight: $font-bold;
     margin-bottom: .5em;
+
+    .fsa-alert--no-icon & {
+      @include font-size(3);
+      margin-top: $size-small;
+      margin-bottom: 0;
+    }
+
   }
 
   &__text {
     @extend .usa-alert-text;
+    .fsa-alert--no-icon & {
+      margin: 0;
+    }
   }
 
 }

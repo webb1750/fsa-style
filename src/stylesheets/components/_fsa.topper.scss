@@ -1,13 +1,27 @@
 .fsa-topper {
 
-  padding-left: $size-default;
-  padding-right: $size-default;
+  & {
+
+    padding-left: $size-default;
+    padding-right: $size-default;
+
+    @media print {
+      display: none;
+    }
+
+  }
 
   &__bd {
+
     margin-left: auto;
     margin-right: auto;
     max-width: $site-max-width;
     padding: $size-medium 0;
+
+    @media print {
+      max-width: none;
+    }
+
   }
 
   &__link {

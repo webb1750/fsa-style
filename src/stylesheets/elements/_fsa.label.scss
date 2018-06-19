@@ -11,17 +11,21 @@ $label-bgc-success: $color-fsa-primary;
 
 .fsa-label {
 
-  @include font-size(0);
-  @include reset-button();
-  line-height: 1;
-  display: inline-block;
-  background-color: $label-bgc;
-  color: $label-text-color;
-  text-transform: uppercase;
-  text-decoration: none;
-  line-height: 1;
-  padding: $label-spacing ($label-spacing + .1rem);
-  cursor: default;
+  & {
+    @include reset-button();
+    @include font-size(0);
+    font-family: $font-sans; // brute-force to override any inheritance (e.g. within an <h1>)
+    font-weight: $font-normal; // brute-force to override any inheritance (e.g. within an <h1>)
+    line-height: 1;
+    display: inline-block;
+    background-color: $label-bgc;
+    color: $label-text-color;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1;
+    padding: $label-spacing ($label-spacing + .1rem);
+    cursor: default;
+  }
 
   &:visited {
     color: $label-text-color;
@@ -49,10 +53,17 @@ $label-bgc-success: $color-fsa-primary;
   }
 
   &--alert {
+
     background-color: $label-bgc-alert;
+
+    @media print {
+      background-color: shade($label-bgc-alert, 60%);
+    }
+
     &[href]:hover {
       color: $label-text-color;
     }
+
   }
 
   &--warning {

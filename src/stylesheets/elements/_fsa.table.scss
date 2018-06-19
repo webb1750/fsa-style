@@ -13,7 +13,6 @@ table {
   margin: 2em 0;
   min-width: 100%;
 
-
 }
 
 caption {
@@ -26,7 +25,9 @@ caption {
 
 th,
 td {
+
   $table-padding-unstyled: $table-padding;
+
   text-align: left;
 
   // scss-lint:disable TrailingSemicolon SpaceAfterPropertyColon
@@ -49,6 +50,11 @@ th {
 
   thead & {
     font-weight: $font-bold;
+    color: tint($color-fsa-tertiary, 15%);
+  }
+
+  &[aria-sort] {
+    color: $color-base;
   }
 
 }
@@ -141,9 +147,11 @@ th {
         border: 0;
         padding: 0;
         width: 100%;
+        text-align: left;
 
         &:before {
           content: attr(aria-label);
+          text-transform: uppercase;
           display: block;
           font-weight: $font-bold;
           margin-top: 1em;
@@ -158,6 +166,90 @@ th {
 
       }
 
+    }
+
+  }
+
+  &--responsive-horizontal {
+
+    @include breakpoint(M, down) {
+
+      th,
+      td {
+
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        vertical-align: top;
+        margin-bottom: $size-small;
+
+        &:last-child {
+          margin-bottom: initial;
+        }
+
+        &:before {
+          @include font-size(2);
+          display: initial;
+          margin-right: $size-small;
+          margin-top: initial;
+          text-align: left;
+        }
+
+      }
+
+    }
+
+  }
+
+  &__sort {
+
+    @include reset-button;
+    display: block;
+    width: 100%;
+
+    .fsa-text-align--right & {
+      text-align: right;
+    }
+
+    &:focus,
+    &:hover {
+      color: $color-fsa-tertiary-900;
+    }
+
+    &:after {
+      content: '';
+      background-size: 100%;
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      top: -2px;
+      margin-left: 4px;
+      opacity: .2;
+      background-image: url('#{$image-path}/chevron-up.png');
+      background-image: url('#{$image-path}/chevron-up.svg');
+    }
+
+    &--descending:after,
+    &--ascending:after {
+      opacity: 1;
+    }
+
+    &--descending:after {
+      background-image: url('#{$image-path}/chevron-up.png');
+      background-image: url('#{$image-path}/chevron-up.svg');
+    }
+
+    &--ascending:after {
+      background-image: url('#{$image-path}/chevron-down.png');
+      background-image: url('#{$image-path}/chevron-down.svg');
+    }
+
+    &:hover:not(.fsa-table__sort--descending, .fsa-table__sort--ascending) {
+      &:after {
+        opacity: 1;
+      }
     }
 
   }

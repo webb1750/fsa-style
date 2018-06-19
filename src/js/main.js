@@ -11,11 +11,11 @@
 
 'use strict';
 
-console.log('main loading');
-var $ = window.jQuery = require('jquery');
 var DocsNav = require('./components/docs-nav');
 var FSA_NAV_GLOBAL = require('./components/fsa-nav-global');
 var ModalComponent = require('./components/fsa-modal');
 var GrowlComponent = require('./components/fsa-growl');
 var WhiteoutComponent = require('./components/fsa-whiteout');
 var SelectMultipleComponent = require('./components/fsa-select-multi');
+var SteppedControl = require('./components/fsa-stepped-control');
+var ColorDocs = require('./components/docs-color');

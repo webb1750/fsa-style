@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "FSA-Style-Webpack-Test1",
   "version": "3.0.0",
   "main": "index.js",
@@ -11,6 +12,32 @@
   "author": "Casey Hill <bignamehere@gmail.com>",
   "license": "ISC",
   "description": "",
+=======
+  "name": "fsa-style",
+  "description": "Open Source CSS Framework for USDA Farm Service Agency web sites and apps",
+  "version": "2.1.4",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usda-fsa/fsa-style.git"
+  },
+  "author": "USDA FSA Enterprise Architecture",
+  "contributors": [
+    "Francis Rupert <France.Rupert@gmail.com> (https://github.com/francisrupert)",
+    "Casey Hill <bignamehere@gmail.com> (https://github.com/bignamehere)",
+    "Brian Mills (https://www.linkedin.com/in/brianmills)"
+  ],
+  "bugs": {
+    "url": "https://github.com/USDA-FSA/fsa-style/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --config webpack.dev.js",
+    "build": "webpack --mode production --optimize-minimize --config webpack.prod.js",
+    "watch": "webpack --watch",
+    "server": "node ./server/index.js"
+  },
+>>>>>>> wp4
   "devDependencies": {
     "autoprefixer": "^8.6.0",
     "babel-core": "^6.26.3",
