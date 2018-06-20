@@ -44,12 +44,20 @@ if(stickySteps.length){
   window.addEventListener('scroll', function() {
     setComponentStyle();
   });
-
+  
+  var modals = document.querySelectorAll('.fsa-modal');
+  forEach(modals, function(index, value) {
+    var _el = value;
+    _el.addEventListener("scroll", function(){
+      setComponentStyle();
+    });
+  });
+  /*
   var modal = document.querySelector('.fsa-modal');
   modal.addEventListener("scroll", function(){
     setComponentStyle();
   });
-
+  */
   document.addEventListener("DOMContentLoaded", function(){
     setComponentStyle();
   });
@@ -57,6 +65,8 @@ if(stickySteps.length){
   window.addEventListener('resize', function() {
     setComponentStyle();
   });
+
+  
 
 }
 
