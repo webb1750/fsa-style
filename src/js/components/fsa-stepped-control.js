@@ -37,7 +37,6 @@ function setComponentStyle() {
   });
 }
 
-
 // check if SC component exists on page
 if(stickySteps.length){
 
@@ -52,12 +51,7 @@ if(stickySteps.length){
       setComponentStyle();
     });
   });
-  /*
-  var modal = document.querySelector('.fsa-modal');
-  modal.addEventListener("scroll", function(){
-    setComponentStyle();
-  });
-  */
+
   document.addEventListener("DOMContentLoaded", function(){
     setComponentStyle();
   });
