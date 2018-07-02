@@ -1,8 +1,8 @@
 {
   "name": "fsa-style",
   "description": "Open Source CSS Framework for USDA Farm Service Agency web sites and apps",
-  "version": "2.1.5",
-  "license": "SEE LICENSE in LICENSE.md",
+  "version": "2.1.4",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/usda-fsa/fsa-style.git"
@@ -16,42 +16,44 @@
   "bugs": {
     "url": "https://github.com/USDA-FSA/fsa-style/issues"
   },
+  "main": "index.js",
   "scripts": {
-    "build": "grunt build",
-    "start": "npm i && grunt",
-    "deploy": "grunt deploy",
-    "test": "grunt test"
+    "start": "webpack-dev-server --mode development --config webpack.dev.js",
+    "build": "webpack --mode production --optimize-minimize --config webpack.prod.js",
+    "watch": "webpack --watch",
+    "server": "node ./server/index.js"
   },
   "devDependencies": {
-    "autoprefixer": "^6.5.1",
-    "cssnano": "^3.7.7",
-    "grunt": "^1.0.1",
-    "grunt-banner": "^0.6.0",
-    "grunt-browser-sync": "^2.0.0",
-    "grunt-browserify": "^5.0.0",
-    "grunt-build-control": "^0.7.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-concurrent": "^2.3.1",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-compress": "^1.3.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-newer": "^1.3.0",
-    "grunt-postcss": "^0.8.0",
-    "grunt-prettify": "^0.4.0",
-    "grunt-sass": "^1.2.1",
-    "grunt-scss-lint": "^0.5.0",
-    "load-grunt-tasks": "^3.5.2",
-    "node-sass": "^4.7.2",
-    "pixrem": "^3.0.2",
-    "postcss-quantity-queries": "^0.4.0",
-    "time-grunt": "^1.4.0"
+    "autoprefixer": "^8.6.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "express": "^4.16.3",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "imports-loader": "^0.8.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.9.0",
+    "postcss-import": "^11.1.0",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "stylelint": "^9.2.1",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "jquery": "^3.3.1",
-    "npm": "^6.1.0",
-    "politespace": "^0.1.7",
-    "uswds": "~1.2.1"
+    "html-beautify-webpack-plugin": "^1.0.5",
+    "pixrem": "^4.0.1"
   }
 }

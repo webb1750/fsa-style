@@ -1,11 +1,4 @@
-.sass-cache
 .DS_Store
 node_modules
 dist
 npm-debug.log
-.ugly
-.bundle/
-src/scratch.html
-src/scratch.md
-src/working.html
-published

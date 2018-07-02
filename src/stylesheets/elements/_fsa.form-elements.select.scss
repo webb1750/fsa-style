@@ -30,6 +30,7 @@
     /* Webkit only */
     // yep, a SINGLE pixel bugged me enough to do this
     padding-top: $form-padding - .1rem;
+    -webkit-appearance: none;
   }
 
   // IE 10 +
