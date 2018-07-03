@@ -88,7 +88,6 @@ var Helper = (function () {
     return '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style;
   };
 
-
   //Object Literal Return
   return {
     forEach: forEach, //( array, callback, scope )
