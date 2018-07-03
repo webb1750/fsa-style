@@ -35,7 +35,7 @@ var Helper = (function () {
     for ( ; elem && elem !== document; elem = elem.parentNode ) {
       if ( elem.matches( selector ) ) return elem;
     }
-    
+
     return null;
   };
 
@@ -59,8 +59,6 @@ var Helper = (function () {
   };
 
 
-
-
   // PUBLIC METHODS
   var forEach = function( array, callback, scope ){
     return _forEach( array, callback, scope );
@@ -74,16 +72,31 @@ var Helper = (function () {
     return _getAnimationString(elem);
   }
 
-  var hasClass = function(elem){
-    return _hasClass(elem);
+  var hasClass = function(elem, classname){
+    return _hasClass(elem, classname);
   }
+
+  var isIE10Down = function() {
+    if (new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null) {
+      return parseFloat( RegExp.$1 );
+    } else {
+      return false;
+    }
+  };
+
+  var isIE11 = function(){
+    return '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style;
+  };
+
 
   //Object Literal Return
   return {
-    forEach: forEach, //( array, callback, scope )    
+    forEach: forEach, //( array, callback, scope )
     getClosest: getClosest, //( elem, selector )
     getAnimationString: getAnimationString, //( elem ),
-    hasClass: hasClass //( elem )
+    hasClass: hasClass, //( elem, classname )
+    isIE10Ddown: isIE10Down,
+    isIE11: isIE11
   };
 
 })();
